@@ -56,10 +56,7 @@ public class LoginFormServlet extends HttpServlet {
             
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
-            if (user == null) {
-            	request.setAttribute("mess", "Wrong user or password");
-            }
-            else if ("admin".equals(user.getUsername()) && "1234".equals(pass)) {
+             if ("admin".equals(user.getUsername()) && "1234".equals(pass)) {
                 // Admin login
             	System.out.print("Check admin");
               
@@ -68,7 +65,10 @@ public class LoginFormServlet extends HttpServlet {
             } else if (user != null && user.getPassword().equals(pass)) {
                 // Regular user login
                 response.sendRedirect("index.jsp");
-
+            }
+            else {
+            	request.setAttribute("mess", "Wrong user or password");
+            	request.getRequestDispatcher("my_account.jsp").forward(request, response);
             }
 	}
 }
